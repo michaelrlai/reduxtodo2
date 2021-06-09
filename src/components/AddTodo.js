@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import uniqid from "uniqid";
 import { addTodo } from "../redux/todoList";
 
 const AddTodo = () => {
-  const { todoList } = useSelector((state) => state.todo);
   const dispatch = useDispatch();
   const [input, setInput] = useState("");
 
   const handleSubmit = () => {
+    if (input === "") return;
     dispatch(
       addTodo({
         id: uniqid(),
@@ -17,10 +17,6 @@ const AddTodo = () => {
     );
     setInput("");
   };
-
-  /*  useEffect(() => {
-    console.log(todoList);
-  }, [todoList]); */
 
   return (
     <div className="input-group mt-3">

@@ -8,6 +8,7 @@ const UpdateTodo = ({ todo }) => {
   const [input, setInput] = useState(todo.description);
 
   const handleSubmit = (e) => {
+    if (input === "") return;
     dispatch(
       updateTodo({
         id: todo.id,
@@ -17,7 +18,11 @@ const UpdateTodo = ({ todo }) => {
     e.stopPropagation();
   };
 
-  console.log(todoList);
+  const handleKeypress = (e) => {
+    if (e.key === "Escape" || e.keyCode === 27) {
+      setInput(todo.description);
+    }
+  };
 
   return (
     <div>
@@ -37,6 +42,7 @@ const UpdateTodo = ({ todo }) => {
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
+        onKeyDown={(e) => handleKeypress(e)}
       >
         <div className="modal-dialog">
           <div className="modal-content">
@@ -62,7 +68,7 @@ const UpdateTodo = ({ todo }) => {
             </div>
             <div className="modal-footer">
               <button
-                type="button"
+                type="submit"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
                 onClick={() => setInput(todo.description)}
@@ -70,12 +76,12 @@ const UpdateTodo = ({ todo }) => {
                 Close
               </button>
               <button
-                type="button"
+                type="submit"
                 className="btn btn-warning"
                 onClick={handleSubmit}
                 data-bs-dismiss="modal"
               >
-                Save changes
+                Update
               </button>
             </div>
           </div>
